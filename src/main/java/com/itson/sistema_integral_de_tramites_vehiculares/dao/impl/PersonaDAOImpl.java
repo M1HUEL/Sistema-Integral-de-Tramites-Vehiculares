@@ -11,7 +11,6 @@ import java.util.List;
 /**
  *
  * @author Miguel Ángel Sánchez Sotelo
- * @author Alejandro Efraín Ibarra Armenta
  */
 public class PersonaDAOImpl implements PersonaDAO {
 
