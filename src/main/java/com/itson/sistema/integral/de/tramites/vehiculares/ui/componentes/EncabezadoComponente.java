@@ -1,5 +1,9 @@
 package com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes;
 
+import com.itson.sistema.integral.de.tramites.vehiculares.ui.AdministradorConsultas;
+import com.itson.sistema.integral.de.tramites.vehiculares.ui.AdministradorLicencias;
+import com.itson.sistema.integral.de.tramites.vehiculares.ui.AdministradorPlacas;
+import com.itson.sistema.integral.de.tramites.vehiculares.ui.AdministradorReportes;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -27,6 +31,26 @@ public class EncabezadoComponente extends JPanel {
         add(btnPlacas);
         add(btnConsultas);
         add(btnReportes);
+
+        btnLicencias.addActionListener(e -> {
+            AdministradorLicencias frame = new AdministradorLicencias();
+            frame.setVisible(true);
+        });
+
+        btnPlacas.addActionListener(e -> {
+            AdministradorPlacas frame = new AdministradorPlacas();
+            frame.setVisible(true);
+        });
+
+        btnConsultas.addActionListener(e -> {
+            AdministradorConsultas frame = new AdministradorConsultas();
+            frame.setVisible(true);
+        });
+
+        btnReportes.addActionListener(e -> {
+            AdministradorReportes frame = new AdministradorReportes();
+            frame.setVisible(true);
+        });
     }
 
     private JButton crearBoton(String texto) {
