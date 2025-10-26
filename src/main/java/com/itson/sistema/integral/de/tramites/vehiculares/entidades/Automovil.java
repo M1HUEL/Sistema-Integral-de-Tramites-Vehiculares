@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -22,20 +24,26 @@ public class Automovil implements Serializable {
 
     @Column(name = "id")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(name = "numero_serie", nullable = false, unique = true)
+    private String numeroSerie;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(name = "marca", nullable = false)
+    private String marca;
 
-    @Override
-    public String toString() {
-        return "Automovil{" + "id=" + id + '}';
-    }
+    @Column(name = "linea")
+    private String linea;
+
+    @Column(name = "color")
+    private String color;
+
+    @Column(name = "modelo")
+    private Integer modelo;
+
+    @ManyToOne
+    @JoinColumn(name = "persona_id", nullable = false)
+    private Persona persona;
 
 }
