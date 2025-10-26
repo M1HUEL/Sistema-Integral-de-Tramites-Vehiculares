@@ -15,6 +15,6 @@ public interface PersonaDAO {
 
     boolean actualizar(Long id, Persona persona);
 
-    boolean eliminar(Long id, Persona persona);
+    boolean eliminar(Long id);
 
 }

@@ -55,7 +55,6 @@ public class PersonaDAOImpl implements PersonaDAO {
         EntityManager em = emf.createEntityManager();
         Persona existente = em.find(Persona.class, persona.getId());
         if (existente == null) {
-            System.out.println("La persona con ID " + persona.getId() + " no existe.");
             return false;
         }
         em.getTransaction().begin();
@@ -71,23 +70,16 @@ public class PersonaDAOImpl implements PersonaDAO {
     }
 
     @Override
-    public boolean eliminar(Long id, Persona persona) {
+    public boolean eliminar(Long id) {
         EntityManager em = emf.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            if (!em.contains(persona)) {
-                persona = em.merge(persona);
-            }
-            em.remove(persona);
-            em.getTransaction().commit();
-            return true;
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            e.printStackTrace();
+        Persona existente = em.find(Persona.class, id);
+        if (existente == null) {
             return false;
         }
+        em.getTransaction().begin();
+        em.remove(existente);
+        em.getTransaction().commit();
+        return true;
     }
 
 }
