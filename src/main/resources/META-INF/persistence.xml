@@ -4,6 +4,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.itson.sistema.integral.de.tramites.vehiculares.entidades.Persona</class>
     <class>com.itson.sistema.integral.de.tramites.vehiculares.entidades.Automovil</class>
+    <class>com.itson.sistema.integral.de.tramites.vehiculares.entidades.Licencia</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sistema_integral_de_Tramites_vehiculares_db?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
