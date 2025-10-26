@@ -88,6 +88,5 @@ public class Tramite implements Serializable {
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
-    
-    
+
 }
