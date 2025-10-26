@@ -44,6 +44,18 @@ public class Licencia implements Serializable {
     @JoinColumn(name = "persona_id", nullable = false)
     private Persona persona;
 
+    public Licencia() {
+    }
+
+    public Licencia(Long id, LocalDate fechaExpedicion, int vigenciaAnios, Double monto, boolean discapacitado, Persona persona) {
+        this.id = id;
+        this.fechaExpedicion = fechaExpedicion;
+        this.vigenciaAnios = vigenciaAnios;
+        this.monto = monto;
+        this.discapacitado = discapacitado;
+        this.persona = persona;
+    }
+
     public Long getId() {
         return id;
     }
