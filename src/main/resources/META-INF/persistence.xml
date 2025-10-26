@@ -6,6 +6,7 @@
     <class>com.itson.sistema.integral.de.tramites.vehiculares.entidades.Automovil</class>
     <class>com.itson.sistema.integral.de.tramites.vehiculares.entidades.Licencia</class>
     <class>com.itson.sistema.integral.de.tramites.vehiculares.entidades.Placa</class>
+    <class>com.itson.sistema.integral.de.tramites.vehiculares.entidades.Tramite</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sistema_integral_de_Tramites_vehiculares_db?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
