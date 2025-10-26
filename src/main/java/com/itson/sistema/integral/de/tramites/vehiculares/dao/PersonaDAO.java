@@ -9,11 +9,11 @@ public interface PersonaDAO {
 
     Persona buscarPorId(Long id);
 
-    Persona buscarPorRFC();
+    Persona buscarPorRFC(String rfc);
 
     Persona crear(Persona persona);
 
-    boolean actualizar(Long id);
+    boolean actualizar(Long id, Persona persona);
 
     boolean eliminar(Long id, Persona persona);
 
