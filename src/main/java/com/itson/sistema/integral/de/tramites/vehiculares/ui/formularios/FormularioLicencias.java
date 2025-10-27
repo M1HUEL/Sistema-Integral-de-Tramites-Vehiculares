@@ -4,6 +4,8 @@ import com.itson.sistema.integral.de.tramites.vehiculares.dao.impl.LicenciaDAOIm
 import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Licencia;
 import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Persona;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.LicenciaDAO;
+import com.itson.sistema.integral.de.tramites.vehiculares.dao.PersonaDAO;
+import com.itson.sistema.integral.de.tramites.vehiculares.dao.impl.PersonaDAOImpl;
 
 import com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes.CampoFormulario;
 import java.awt.BorderLayout;
@@ -20,6 +22,7 @@ public class FormularioLicencias extends JPanel {
     public JCheckBox checkDiscapacitado;
     public JButton btnAgregar, btnCancelar;
     private final LicenciaDAO licenciaDAO = new LicenciaDAOImpl();
+    private final PersonaDAO personaDAO = new PersonaDAOImpl();
 
     public FormularioLicencias() {
         setLayout(new BorderLayout(10, 10));
@@ -141,6 +144,14 @@ public class FormularioLicencias extends JPanel {
             persona.setFechaNacimiento(LocalDate.parse(txtFecha.getText().trim()));
             persona.setTelefono(txtTelefono.getText().trim());
             persona.setPais((String) comboPaises.getSelectedItem());
+
+            Persona personaExistente = personaDAO.buscarPorRFC(persona.getRfc());
+            if (personaExistente != null) {
+                licencia.setPersona(personaExistente);
+            } else {
+                personaDAO.crear(persona);
+                licencia.setPersona(persona);
+            }
 
             licencia.setPersona(persona);
             licencia.setFechaExpedicion(LocalDate.now());
