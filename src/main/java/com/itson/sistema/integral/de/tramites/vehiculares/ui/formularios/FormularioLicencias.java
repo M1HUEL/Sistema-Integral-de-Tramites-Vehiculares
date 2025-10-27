@@ -1,11 +1,17 @@
 package com.itson.sistema.integral.de.tramites.vehiculares.ui.formularios;
 
+import com.itson.sistema.integral.de.tramites.vehiculares.dao.impl.LicenciaDAOImpl;
+import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Licencia;
+import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Persona;
+import com.itson.sistema.integral.de.tramites.vehiculares.dao.LicenciaDAO;
+
 import com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes.CampoFormulario;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import javax.swing.*;
+import java.awt.HeadlessException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import javax.swing.*;
 
 public class FormularioLicencias extends JPanel {
 
@@ -13,6 +19,7 @@ public class FormularioLicencias extends JPanel {
     public JComboBox<String> comboPaises, comboVigencias;
     public JCheckBox checkDiscapacitado;
     public JButton btnAgregar, btnCancelar;
+    private final LicenciaDAO licenciaDAO = new LicenciaDAOImpl();
 
     public FormularioLicencias() {
         setLayout(new BorderLayout(10, 10));
@@ -21,8 +28,7 @@ public class FormularioLicencias extends JPanel {
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
         titulo.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));
 
-        JPanel contenido = new JPanel();
-        contenido.setLayout(new GridLayout(4, 3, 10, 10));
+        JPanel contenido = new JPanel(new GridLayout(4, 3, 10, 10));
         contenido.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
 
         txtRFC = new JTextField();
@@ -62,6 +68,9 @@ public class FormularioLicencias extends JPanel {
 
         comboVigencias.addActionListener(e -> calcularMonto());
         checkDiscapacitado.addActionListener(e -> calcularMonto());
+
+        btnAgregar.addActionListener(e -> agregarLicencia());
+        btnCancelar.addActionListener(e -> limpiarFormulario());
     }
 
     public void calcularMonto() {
@@ -116,5 +125,36 @@ public class FormularioLicencias extends JPanel {
         comboVigencias.setSelectedIndex(0);
         checkDiscapacitado.setSelected(false);
         txtMonto.setText("");
+    }
+
+    private void agregarLicencia() {
+        if (!validarCampos()) {
+            return;
+        }
+
+        try {
+            Licencia licencia = new Licencia();
+
+            Persona persona = new Persona();
+            persona.setRfc(txtRFC.getText().trim());
+            persona.setNombreCompleto(txtNombre.getText().trim());
+            persona.setFechaNacimiento(LocalDate.parse(txtFecha.getText().trim()));
+            persona.setTelefono(txtTelefono.getText().trim());
+            persona.setPais((String) comboPaises.getSelectedItem());
+
+            licencia.setPersona(persona);
+            licencia.setFechaExpedicion(LocalDate.now());
+            licencia.setVigenciaAnios(Integer.parseInt(((String) comboVigencias.getSelectedItem()).split(" ")[0]));
+            licencia.setDiscapacitado(checkDiscapacitado.isSelected());
+            licencia.setMonto(Double.valueOf(txtMonto.getText().replace("$", "")));
+
+            licenciaDAO.crear(licencia);
+
+            JOptionPane.showMessageDialog(this, "Licencia agregada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            limpiarFormulario();
+
+        } catch (HeadlessException | NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Error al agregar la licencia: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
