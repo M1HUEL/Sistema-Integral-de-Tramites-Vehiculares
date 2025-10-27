@@ -6,8 +6,6 @@ public class SistemaIntegralDeTramitesVehiculares {
 
     public static void main(String[] args) {
 
-        AdministradorLicencias al = new AdministradorLicencias();
-        al.setVisible(true);
 
     }
 }
