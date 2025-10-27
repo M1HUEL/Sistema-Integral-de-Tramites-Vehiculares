@@ -3,15 +3,9 @@ package com.itson.sistema.integral.de.tramites.vehiculares.ui.formularios;
 import com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes.CampoFormulario;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.FlowLayout;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class FormularioLicencias extends JPanel {
 
@@ -27,7 +21,8 @@ public class FormularioLicencias extends JPanel {
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
         titulo.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));
 
-        JPanel contenido = new JPanel(new GridLayout(3, 3, 10, 10));
+        JPanel contenido = new JPanel();
+        contenido.setLayout(new GridLayout(4, 3, 10, 10)); // Ajuste para los botones
         contenido.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
 
         txtRFC = new JTextField();
@@ -45,6 +40,9 @@ public class FormularioLicencias extends JPanel {
 
         checkDiscapacitado = new JCheckBox();
 
+        btnAgregar = new JButton("Agregar");
+        btnCancelar = new JButton("Cancelar");
+
         contenido.add(new CampoFormulario("RFC", txtRFC));
         contenido.add(new CampoFormulario("Nombre completo", txtNombre));
         contenido.add(new CampoFormulario("Fecha nacimiento", txtFecha));
@@ -54,15 +52,69 @@ public class FormularioLicencias extends JPanel {
         contenido.add(new CampoFormulario("Monto", txtMonto));
         contenido.add(new CampoFormulario("Discapacidad", checkDiscapacitado));
 
-        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
-        btnAgregar = new JButton("Agregar");
-        btnCancelar = new JButton("Cancelar");
-
+        JPanel panelBotones = new JPanel();
         panelBotones.add(btnAgregar);
         panelBotones.add(btnCancelar);
+        contenido.add(panelBotones);
 
         add(titulo, BorderLayout.NORTH);
         add(contenido, BorderLayout.CENTER);
-        add(panelBotones, BorderLayout.SOUTH);
+
+        comboVigencias.addActionListener(e -> calcularMonto());
+        checkDiscapacitado.addActionListener(e -> calcularMonto());
+    }
+
+    public void calcularMonto() {
+        String vigenciaStr = (String) comboVigencias.getSelectedItem();
+        boolean discapacitado = checkDiscapacitado.isSelected();
+
+        if (vigenciaStr == null) {
+            return;
+        }
+
+        double monto = switch (vigenciaStr) {
+            case "1 Year" ->
+                discapacitado ? 200 : 600;
+            case "2 Year" ->
+                discapacitado ? 500 : 900;
+            case "3 Year" ->
+                discapacitado ? 700 : 1100;
+            default ->
+                0;
+        };
+
+        txtMonto.setText("$" + monto);
+    }
+
+    public boolean validarCampos() {
+        if (txtRFC.getText().trim().isEmpty()
+                || txtNombre.getText().trim().isEmpty()
+                || txtFecha.getText().trim().isEmpty()
+                || txtTelefono.getText().trim().isEmpty()
+                || comboPaises.getSelectedItem() == null
+                || comboVigencias.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        try {
+            LocalDate.parse(txtFecha.getText().trim());
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "La fecha debe tener formato YYYY-MM-DD.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
+    public void limpiarFormulario() {
+        txtRFC.setText("");
+        txtNombre.setText("");
+        txtFecha.setText("");
+        txtTelefono.setText("");
+        comboPaises.setSelectedIndex(0);
+        comboVigencias.setSelectedIndex(0);
+        checkDiscapacitado.setSelected(false);
+        txtMonto.setText("");
     }
 }
