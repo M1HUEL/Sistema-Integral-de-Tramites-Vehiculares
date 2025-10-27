@@ -25,7 +25,6 @@ public class AdministradorConsultas extends javax.swing.JFrame {
         TablaHistorialPanel tablaHistorial = new TablaHistorialPanel();
 
         formulario.btnBuscar.addActionListener(e -> {
-            // Limpiar la tabla antes de agregar resultados
             tablaHistorial.limpiarTabla();
 
             System.out.println("Buscando historial con criterios:");
@@ -34,7 +33,6 @@ public class AdministradorConsultas extends javax.swing.JFrame {
             System.out.println("Año: " + formulario.txtAnioNacimiento.getText());
             System.out.println("Tipo: " + formulario.comboTipoConsulta.getSelectedItem());
 
-            // Agregar datos de ejemplo
             tablaHistorial.agregarFila("2025-01-14", "Licencia", "Juan Pérez", 900);
             tablaHistorial.agregarFila("2025-02-20", "Placas", "María López", 1500);
         });
