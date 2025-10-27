@@ -8,7 +8,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class TablaReportesPanel extends JPanel {
 
-    final JTable tabla;
+    public final JTable tabla;
     private final DefaultTableModel modelo;
 
     public TablaReportesPanel() {
