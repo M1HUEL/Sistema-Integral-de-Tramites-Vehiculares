@@ -1,8 +1,13 @@
 package com.itson.sistema.integral.de.tramites.vehiculares;
 
+import com.itson.sistema.integral.de.tramites.vehiculares.ui.AdministradorLicencias;
+
 public class SistemaIntegralDeTramitesVehiculares {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+        AdministradorLicencias al = new AdministradorLicencias();
+        al.setVisible(true);
+
     }
 }

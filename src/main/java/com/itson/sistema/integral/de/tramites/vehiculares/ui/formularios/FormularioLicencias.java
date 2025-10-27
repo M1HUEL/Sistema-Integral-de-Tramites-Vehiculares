@@ -3,7 +3,9 @@ package com.itson.sistema.integral.de.tramites.vehiculares.ui.formularios;
 import com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes.CampoFormulario;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.FlowLayout;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -16,6 +18,7 @@ public class FormularioLicencias extends JPanel {
     public JTextField txtRFC, txtNombre, txtFecha, txtTelefono, txtMonto;
     public JComboBox<String> comboPaises, comboVigencias;
     public JCheckBox checkDiscapacitado;
+    public JButton btnAgregar, btnCancelar;
 
     public FormularioLicencias() {
         setLayout(new BorderLayout(10, 10));
@@ -24,8 +27,7 @@ public class FormularioLicencias extends JPanel {
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
         titulo.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));
 
-        JPanel contenido = new JPanel();
-        contenido.setLayout(new GridLayout(3, 3, 10, 10));
+        JPanel contenido = new JPanel(new GridLayout(3, 3, 10, 10));
         contenido.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
 
         txtRFC = new JTextField();
@@ -52,8 +54,15 @@ public class FormularioLicencias extends JPanel {
         contenido.add(new CampoFormulario("Monto", txtMonto));
         contenido.add(new CampoFormulario("Discapacidad", checkDiscapacitado));
 
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
+        btnAgregar = new JButton("Agregar");
+        btnCancelar = new JButton("Cancelar");
+
+        panelBotones.add(btnAgregar);
+        panelBotones.add(btnCancelar);
+
         add(titulo, BorderLayout.NORTH);
         add(contenido, BorderLayout.CENTER);
+        add(panelBotones, BorderLayout.SOUTH);
     }
-
 }
