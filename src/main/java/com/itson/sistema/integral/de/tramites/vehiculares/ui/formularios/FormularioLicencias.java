@@ -23,7 +23,8 @@ public class FormularioLicencias extends JPanel {
 
         JPanel contenido = new JPanel();
         contenido.setLayout(new GridLayout(4, 3, 10, 10)); // Ajuste para los botones
-        contenido.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
+        contenido.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100))cls
+                
 
         txtRFC = new JTextField();
         txtNombre = new JTextField();
