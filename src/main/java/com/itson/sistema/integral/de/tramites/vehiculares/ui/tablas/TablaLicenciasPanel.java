@@ -19,7 +19,7 @@ public class TablaLicenciasPanel extends JPanel {
     private final LicenciaDAO licenciaDAO;
 
     private static final String[] COLUMNAS = {
-        "Id", "RFC", "Vigencia (Años)",
+        "ID Licencia", "RFC", "Nombre de la persona", "Vigencia (Años)",
         "Fecha Expedición", "Costo", "¿Discapacitado?"
     };
 
@@ -55,11 +55,19 @@ public class TablaLicenciasPanel extends JPanel {
                 Object[] fila = new Object[COLUMNAS.length];
 
                 fila[0] = licencia.getId();
-                fila[1] = licencia.getPersona() != null ? licencia.getPersona().getRfc() : "N/A";
-                fila[2] = licencia.getVigenciaAnios();
-                fila[3] = licencia.getFechaExpedicion();
-                fila[4] = String.format("$%.2f", licencia.getMonto());
-                fila[5] = licencia.isDiscapacitado() ? "Sí" : "No";
+
+                if (licencia.getPersona() != null) {
+                    fila[1] = licencia.getPersona().getRfc();
+                    fila[2] = licencia.getPersona().getNombreCompleto();
+                } else {
+                    fila[1] = "N/A";
+                    fila[2] = "Sin persona";
+                }
+
+                fila[3] = licencia.getVigenciaAnios();
+                fila[4] = licencia.getFechaExpedicion();
+                fila[5] = String.format("$%.2f", licencia.getMonto());
+                fila[6] = licencia.isDiscapacitado() ? "Sí" : "No";
 
                 modelo.addRow(fila);
             }
@@ -75,11 +83,17 @@ public class TablaLicenciasPanel extends JPanel {
         Object[] fila = new Object[COLUMNAS.length];
 
         fila[0] = licencia.getId();
-        fila[1] = licencia.getPersona() != null ? licencia.getPersona().getRfc() : "N/A";
-        fila[2] = licencia.getVigenciaAnios();
-        fila[3] = licencia.getFechaExpedicion();
-        fila[4] = String.format("$%.2f", licencia.getMonto());
-        fila[5] = licencia.isDiscapacitado() ? "Sí" : "No";
+        if (licencia.getPersona() != null) {
+            fila[1] = licencia.getPersona().getRfc();
+            fila[2] = licencia.getPersona().getNombreCompleto();
+        } else {
+            fila[1] = "N/A";
+            fila[2] = "Sin persona";
+        }
+        fila[3] = licencia.getVigenciaAnios();
+        fila[4] = licencia.getFechaExpedicion();
+        fila[5] = String.format("$%.2f", licencia.getMonto());
+        fila[6] = licencia.isDiscapacitado() ? "Sí" : "No";
 
         modelo.addRow(fila);
     }
