@@ -23,9 +23,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes.EncabezadoComponente;
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.formularios.FormularioReportes;
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.tablas.TablaReportesPanel;
+import com.itson.sistema.integral.de.tramites.vehiculares.ui.componente.EncabezadoComponente;
+import com.itson.sistema.integral.de.tramites.vehiculares.ui.formulario.FormularioReportes;
+import com.itson.sistema.integral.de.tramites.vehiculares.ui.tabla.TablaReportesPanel;
 import java.awt.HeadlessException;
 import java.io.FileNotFoundException;
 

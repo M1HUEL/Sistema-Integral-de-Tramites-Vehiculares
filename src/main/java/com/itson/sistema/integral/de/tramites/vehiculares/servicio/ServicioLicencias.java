@@ -1,11 +1,11 @@
-package com.itson.sistema.integral.de.tramites.vehiculares.servicios;
+package com.itson.sistema.integral.de.tramites.vehiculares.servicio;
 
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.LicenciaDAO;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.PersonaDAO;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.impl.LicenciaDAOImpl;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.impl.PersonaDAOImpl;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Licencia;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Persona;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Licencia;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Persona;
 import java.time.LocalDate;
 
 public class ServicioLicencias {

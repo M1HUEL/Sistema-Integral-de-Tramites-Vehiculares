@@ -1,7 +1,7 @@
 package com.itson.sistema.integral.de.tramites.vehiculares.ui;
 
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes.EncabezadoComponente;
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.formularios.FormularioLicencias;
+import com.itson.sistema.integral.de.tramites.vehiculares.ui.componente.EncabezadoComponente;
+import com.itson.sistema.integral.de.tramites.vehiculares.ui.formulario.FormularioLicencias;
 import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;

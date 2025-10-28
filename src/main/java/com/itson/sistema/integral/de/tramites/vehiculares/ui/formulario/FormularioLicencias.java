@@ -1,8 +1,8 @@
-package com.itson.sistema.integral.de.tramites.vehiculares.ui.formularios;
+package com.itson.sistema.integral.de.tramites.vehiculares.ui.formulario;
 
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Licencia;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Persona;
-import com.itson.sistema.integral.de.tramites.vehiculares.servicios.ServicioLicencias;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Licencia;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Persona;
+import com.itson.sistema.integral.de.tramites.vehiculares.servicio.ServicioLicencias;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;

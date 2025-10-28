@@ -1,9 +1,9 @@
-package com.itson.sistema.integral.de.tramites.vehiculares.ui.formularios;
+package com.itson.sistema.integral.de.tramites.vehiculares.ui.formulario;
 
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.TramiteDAO;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.impl.TramiteDAOImpl;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.TipoTramite;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Tramite;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.TipoTramite;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Tramite;
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import java.awt.BorderLayout;

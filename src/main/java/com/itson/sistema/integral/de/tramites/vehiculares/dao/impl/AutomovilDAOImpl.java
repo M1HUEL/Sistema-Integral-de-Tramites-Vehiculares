@@ -1,7 +1,7 @@
 package com.itson.sistema.integral.de.tramites.vehiculares.dao.impl;
 
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.AutomovilDAO;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Automovil;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Automovil;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

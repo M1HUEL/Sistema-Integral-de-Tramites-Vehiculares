@@ -1,4 +1,4 @@
-package com.itson.sistema.integral.de.tramites.vehiculares.entidades;
+package com.itson.sistema.integral.de.tramites.vehiculares.dominio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,12 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-/**
- * ...
- *
- *
- * @author Miguel Ángel Sánchez Sotelo
- */
 @Entity
 @Table(name = "automoviles")
 public class Automovil implements Serializable {
@@ -54,16 +48,6 @@ public class Automovil implements Serializable {
     private List<Placa> placas = new ArrayList<>();
 
     public Automovil() {
-    }
-
-    public Automovil(Long id, String numeroSerie, String marca, String linea, String color, Integer modelo, Persona persona) {
-        this.id = id;
-        this.numeroSerie = numeroSerie;
-        this.marca = marca;
-        this.linea = linea;
-        this.color = color;
-        this.modelo = modelo;
-        this.persona = persona;
     }
 
     public Long getId() {

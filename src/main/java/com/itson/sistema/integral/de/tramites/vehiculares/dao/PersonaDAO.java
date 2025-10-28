@@ -1,6 +1,6 @@
 package com.itson.sistema.integral.de.tramites.vehiculares.dao;
 
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Persona;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Persona;
 import java.util.List;
 
 public interface PersonaDAO {

@@ -1,7 +1,7 @@
 package com.itson.sistema.integral.de.tramites.vehiculares.dao.impl;
 
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.PlacaDAO;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Placa;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Placa;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

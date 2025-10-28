@@ -1,4 +1,4 @@
-package com.itson.sistema.integral.de.tramites.vehiculares.entidades;
+package com.itson.sistema.integral.de.tramites.vehiculares.dominio;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -39,14 +39,6 @@ public class Tramite implements Serializable {
     private Persona persona;
 
     public Tramite() {
-    }
-
-    public Tramite(Long id, LocalDateTime fechaTramite, TipoTramite tipoTramite, Double costo, Persona persona) {
-        this.id = id;
-        this.fechaTramite = fechaTramite;
-        this.tipoTramite = tipoTramite;
-        this.costo = costo;
-        this.persona = persona;
     }
 
     public Long getId() {

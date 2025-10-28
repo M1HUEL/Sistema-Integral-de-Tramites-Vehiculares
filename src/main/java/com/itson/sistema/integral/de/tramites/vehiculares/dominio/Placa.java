@@ -1,4 +1,4 @@
-package com.itson.sistema.integral.de.tramites.vehiculares.entidades;
+package com.itson.sistema.integral.de.tramites.vehiculares.dominio;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -11,12 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-/**
- * ...
- *
- *
- * @author Miguel Ángel Sánchez Sotelo
- */
 @Entity
 @Table(name = "placas")
 public class Placa implements Serializable {
@@ -49,16 +43,6 @@ public class Placa implements Serializable {
     private Persona persona;
 
     public Placa() {
-    }
-
-    public Placa(Long id, String numeroPlaca, LocalDate fechaEmision, LocalDate fechaRecepcion, Double costo, Automovil automovil, Persona persona) {
-        this.id = id;
-        this.numeroPlaca = numeroPlaca;
-        this.fechaEmision = fechaEmision;
-        this.fechaRecepcion = fechaRecepcion;
-        this.costo = costo;
-        this.automovil = automovil;
-        this.persona = persona;
     }
 
     public Long getId() {

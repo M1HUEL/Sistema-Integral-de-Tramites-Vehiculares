@@ -1,9 +1,9 @@
 package com.itson.sistema.integral.de.tramites.vehiculares.dao.impl;
 
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.PersonaDAO;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Licencia;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Persona;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Placa;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Licencia;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Persona;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Placa;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

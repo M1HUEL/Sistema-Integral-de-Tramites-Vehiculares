@@ -1,4 +1,4 @@
-package com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes;
+package com.itson.sistema.integral.de.tramites.vehiculares.ui.componente;
 
 import java.awt.Component;
 import java.awt.GridLayout;

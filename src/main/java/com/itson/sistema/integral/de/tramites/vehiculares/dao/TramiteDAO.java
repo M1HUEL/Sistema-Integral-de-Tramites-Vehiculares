@@ -1,7 +1,7 @@
 package com.itson.sistema.integral.de.tramites.vehiculares.dao;
 
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Tramite;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.TipoTramite;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Tramite;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.TipoTramite;
 import java.time.LocalDateTime;
 import java.util.List;
 

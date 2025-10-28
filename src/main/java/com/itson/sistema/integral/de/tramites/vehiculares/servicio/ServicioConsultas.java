@@ -1,11 +1,11 @@
-package com.itson.sistema.integral.de.tramites.vehiculares.servicios;
+package com.itson.sistema.integral.de.tramites.vehiculares.servicio;
 
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.LicenciaDAO;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.PlacaDAO;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.impl.LicenciaDAOImpl;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.impl.PlacaDAOImpl;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Licencia;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Placa;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Licencia;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Placa;
 import java.util.List;
 import java.util.stream.Collectors;
 

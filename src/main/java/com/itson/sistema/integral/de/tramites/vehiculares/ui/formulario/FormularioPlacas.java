@@ -1,12 +1,12 @@
-package com.itson.sistema.integral.de.tramites.vehiculares.ui.formularios;
+package com.itson.sistema.integral.de.tramites.vehiculares.ui.formulario;
 
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.AutomovilDAO;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.PlacaDAO;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.impl.AutomovilDAOImpl;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.impl.PlacaDAOImpl;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Automovil;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Persona;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Placa;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Automovil;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Persona;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Placa;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;

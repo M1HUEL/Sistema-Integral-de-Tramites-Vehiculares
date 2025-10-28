@@ -1,8 +1,8 @@
-package com.itson.sistema.integral.de.tramites.vehiculares.ui.tablas;
+package com.itson.sistema.integral.de.tramites.vehiculares.ui.tabla;
 
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.LicenciaDAO;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.impl.LicenciaDAOImpl;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Licencia;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Licencia;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.List;

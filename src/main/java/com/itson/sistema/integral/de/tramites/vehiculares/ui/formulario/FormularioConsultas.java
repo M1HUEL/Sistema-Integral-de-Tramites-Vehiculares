@@ -1,11 +1,11 @@
-package com.itson.sistema.integral.de.tramites.vehiculares.ui.formularios;
+package com.itson.sistema.integral.de.tramites.vehiculares.ui.formulario;
 
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.LicenciaDAO;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.PlacaDAO;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.impl.LicenciaDAOImpl;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.impl.PlacaDAOImpl;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Licencia;
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Placa;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Licencia;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Placa;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;

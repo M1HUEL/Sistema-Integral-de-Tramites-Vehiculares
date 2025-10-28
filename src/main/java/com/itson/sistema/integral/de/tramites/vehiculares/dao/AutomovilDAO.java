@@ -1,6 +1,6 @@
 package com.itson.sistema.integral.de.tramites.vehiculares.dao;
 
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Automovil;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Automovil;
 import java.util.List;
 
 public interface AutomovilDAO {

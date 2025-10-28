@@ -1,4 +1,4 @@
-package com.itson.sistema.integral.de.tramites.vehiculares.entidades;
+package com.itson.sistema.integral.de.tramites.vehiculares.dominio;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -13,12 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-/**
- * ...
- *
- *
- * @author Miguel Ángel Sánchez Sotelo
- */
 @Entity
 @Table(name = "personas")
 public class Persona implements Serializable {

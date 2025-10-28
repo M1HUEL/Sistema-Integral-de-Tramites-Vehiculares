@@ -1,6 +1,6 @@
 package com.itson.sistema.integral.de.tramites.vehiculares.dao;
 
-import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Placa;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Placa;
 import java.util.List;
 
 public interface PlacaDAO {

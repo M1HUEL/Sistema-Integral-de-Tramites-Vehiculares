@@ -1,4 +1,4 @@
-package com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes;
+package com.itson.sistema.integral.de.tramites.vehiculares.ui.componente;
 
 import com.itson.sistema.integral.de.tramites.vehiculares.ui.ModuloConsultas;
 import com.itson.sistema.integral.de.tramites.vehiculares.ui.ModuloLicencias;

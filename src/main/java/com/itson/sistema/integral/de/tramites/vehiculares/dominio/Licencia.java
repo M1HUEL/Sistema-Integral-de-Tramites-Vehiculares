@@ -1,4 +1,4 @@
-package com.itson.sistema.integral.de.tramites.vehiculares.entidades;
+package com.itson.sistema.integral.de.tramites.vehiculares.dominio;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -11,12 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-/**
- * ...
- *
- *
- * @author Miguel Ángel Sánchez Sotelo
- */
 @Entity
 @Table(name = "licencias")
 public class Licencia implements Serializable {
@@ -45,15 +39,6 @@ public class Licencia implements Serializable {
     private Persona persona;
 
     public Licencia() {
-    }
-
-    public Licencia(Long id, LocalDate fechaExpedicion, int vigenciaAnios, Double monto, boolean discapacitado, Persona persona) {
-        this.id = id;
-        this.fechaExpedicion = fechaExpedicion;
-        this.vigenciaAnios = vigenciaAnios;
-        this.monto = monto;
-        this.discapacitado = discapacitado;
-        this.persona = persona;
     }
 
     public Long getId() {
