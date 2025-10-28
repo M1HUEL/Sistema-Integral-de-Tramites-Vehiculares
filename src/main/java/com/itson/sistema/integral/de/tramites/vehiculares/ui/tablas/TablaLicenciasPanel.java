@@ -19,7 +19,7 @@ public class TablaLicenciasPanel extends JPanel {
     private final LicenciaDAO licenciaDAO;
 
     private static final String[] COLUMNAS = {
-        "ID Licencia", "Persona (RFC)", "Vigencia (Años)",
+        "Id", "RFC", "Vigencia (Años)",
         "Fecha Expedición", "Costo", "¿Discapacitado?"
     };
 
