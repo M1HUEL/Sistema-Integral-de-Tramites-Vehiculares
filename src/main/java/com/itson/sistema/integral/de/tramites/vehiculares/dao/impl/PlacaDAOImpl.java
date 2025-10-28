@@ -5,6 +5,7 @@ import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Placa;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -12,84 +13,151 @@ import javax.persistence.criteria.Root;
 
 public class PlacaDAOImpl implements PlacaDAO {
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.itson_Sistema-Integral-de-Tramites-Vehiculares_jar_1.0-SNAPSHOTPU");
+    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.itson_mavenproject1_jar_1.0-SNAPSHOTPU");
 
     @Override
     public List<Placa> buscarTodos() {
         EntityManager em = emf.createEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Placa> cq = cb.createQuery(Placa.class);
-        Root<Placa> root = cq.from(Placa.class);
-        cq.select(root);
-        return em.createQuery(cq).getResultList();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Placa> cq = cb.createQuery(Placa.class);
+            Root<Placa> root = cq.from(Placa.class);
+            cq.select(root);
+            return em.createQuery(cq).getResultList();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     @Override
     public Placa buscarPorId(Long id) {
         EntityManager em = emf.createEntityManager();
-        return em.find(Placa.class, id);
+        try {
+            return em.find(Placa.class, id);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     @Override
     public Placa buscarPorNumeroPlaca(String numeroPlaca) {
         EntityManager em = emf.createEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Placa> cq = cb.createQuery(Placa.class);
-        Root<Placa> root = cq.from(Placa.class);
-        cq.select(root).where(cb.equal(root.get("numeroPlaca"), numeroPlaca));
-        List<Placa> resultados = em.createQuery(cq).getResultList();
-        return resultados.isEmpty() ? null : resultados.get(0);
+        try {
+            return em.createQuery("SELECT p FROM Placa p WHERE p.numeroPlaca = :numeroPlaca", Placa.class)
+                    .setParameter("numeroPlaca", numeroPlaca)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (Exception e) {
+            return null;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     @Override
     public List<Placa> buscarPorAutomovilId(Long automovilId) {
         EntityManager em = emf.createEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Placa> cq = cb.createQuery(Placa.class);
-        Root<Placa> root = cq.from(Placa.class);
-        cq.select(root).where(cb.equal(root.get("automovil").get("id"), automovilId));
-        return em.createQuery(cq).getResultList();
+        try {
+            return em.createQuery(
+                    "SELECT p FROM Placa p WHERE p.automovil.id = :automovilId",
+                    Placa.class)
+                    .setParameter("automovilId", automovilId)
+                    .getResultList();
+        } catch (Exception e) {
+            return List.of();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     @Override
     public Placa crear(Placa placa) {
         EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        em.persist(placa);
-        em.getTransaction().commit();
-        return placa;
+        try {
+            em.getTransaction().begin();
+            em.persist(placa);
+            em.getTransaction().commit();
+            return placa;
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Error al crear la placa", e);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     @Override
     public boolean actualizar(Placa placa) {
         EntityManager em = emf.createEntityManager();
-        Placa existente = em.find(Placa.class, placa.getId());
-        if (existente == null) {
-            return false;
-        }
+        try {
+            em.getTransaction().begin();
+            Placa existente = em.find(Placa.class, placa.getId());
 
-        em.getTransaction().begin();
-        existente.setNumeroPlaca(placa.getNumeroPlaca());
-        existente.setFechaEmision(placa.getFechaEmision());
-        existente.setFechaRecepcion(placa.getFechaRecepcion());
-        existente.setCosto(placa.getCosto());
-        existente.setAutomovil(placa.getAutomovil());
-        em.getTransaction().commit();
-        return true;
+            if (existente == null) {
+                em.getTransaction().rollback();
+                return false;
+            }
+
+            existente.setNumeroPlaca(placa.getNumeroPlaca());
+            existente.setFechaEmision(placa.getFechaEmision());
+            existente.setFechaRecepcion(placa.getFechaRecepcion());
+            existente.setCosto(placa.getCosto());
+
+            existente.setAutomovil(placa.getAutomovil());
+            existente.setPersona(placa.getPersona());
+
+            em.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            return false;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     @Override
     public boolean eliminar(Long id) {
         EntityManager em = emf.createEntityManager();
-        Placa existente = em.find(Placa.class, id);
-        if (existente == null) {
-            return false;
-        }
+        try {
+            em.getTransaction().begin();
+            Placa existente = em.find(Placa.class, id);
 
-        em.getTransaction().begin();
-        em.remove(existente);
-        em.getTransaction().commit();
-        return true;
+            if (existente == null) {
+                em.getTransaction().rollback();
+                return false;
+            }
+
+            em.remove(existente);
+            em.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            return false;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
 }
