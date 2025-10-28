@@ -16,7 +16,7 @@ import javax.persistence.criteria.Root;
 
 public class TramiteDAOImpl implements TramiteDAO {
 
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.itson_mavenproject1_jar_1.0-SNAPSHOTPU");
+    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.itson_Sistema-Integral-de-Tramites-Vehiculares_jar_1.0-SNAPSHOTPU");
 
     @Override
     public List<Tramite> buscarTodos() {
