@@ -11,7 +11,6 @@ import com.itson.sistema.integral.de.tramites.vehiculares.servicios.ServicioTram
 import com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes.CampoFormulario;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.HeadlessException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import javax.swing.*;
