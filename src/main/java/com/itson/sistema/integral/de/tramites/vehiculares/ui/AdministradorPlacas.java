@@ -2,7 +2,7 @@ package com.itson.sistema.integral.de.tramites.vehiculares.ui;
 
 import com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes.EncabezadoComponente;
 import com.itson.sistema.integral.de.tramites.vehiculares.ui.formularios.FormularioPlacas;
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.tablas.TablaLicenciasPanel;
+import com.itson.sistema.integral.de.tramites.vehiculares.ui.tablas.TablaLicenciasPanel; // Nota: Se usa TablaLicenciasPanel
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.BorderFactory;
@@ -14,50 +14,32 @@ public class AdministradorPlacas extends javax.swing.JFrame {
     public AdministradorPlacas() {
         initComponents();
 
-        setLayout(new BorderLayout());
+        this.setTitle("Administración de Trámites de Placas");
+        this.setLayout(new BorderLayout());
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        JPanel panelPrincipal = new JPanel(new BorderLayout());
+        panelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JPanel contenido = new JPanel();
-        contenido.setLayout(new BorderLayout(10, 10));
-
+        EncabezadoComponente encabezado = new EncabezadoComponente();
         FormularioPlacas formulario = new FormularioPlacas();
-
         TablaLicenciasPanel tablaPlacas = new TablaLicenciasPanel();
 
-        formulario.comboTipoTramite.addActionListener(e -> actualizarMonto(formulario));
-        formulario.checkAutoNuevo.addActionListener(e -> actualizarMonto(formulario));
-
+        JPanel contenido = new JPanel(new BorderLayout(10, 10));
         contenido.add(formulario, BorderLayout.NORTH);
         contenido.add(tablaPlacas, BorderLayout.CENTER);
 
         JPanel controles = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
 
-        JButton btnRegistrar = new JButton("Registrar placa");
-        JButton btnCancelar = new JButton("Cancelar trámite");
+        JButton btnRegistrar = new JButton("Registrar Placa");
+        JButton btnCancelar = new JButton("Cancelar Trámite");
 
         controles.add(btnRegistrar);
         controles.add(btnCancelar);
 
-        EncabezadoComponente encabezado = new EncabezadoComponente();
+        panelPrincipal.add(encabezado, BorderLayout.NORTH);
+        panelPrincipal.add(contenido, BorderLayout.CENTER);
 
-        panel.add(encabezado, BorderLayout.NORTH);
-        panel.add(contenido, BorderLayout.CENTER);
-        panel.add(controles, BorderLayout.SOUTH);
-
-        add(panel, BorderLayout.CENTER);
-    }
-
-    private void actualizarMonto(FormularioPlacas f) {
-        boolean esNuevo = f.comboTipoTramite.getSelectedItem().toString().equals("Auto Nuevo")
-                || f.checkAutoNuevo.isSelected();
-
-        double monto = esNuevo ? 1500 : 1000;
-        f.txtMonto.setText("$" + monto);
-
-        f.txtNumPlacasAnteriores.setEnabled(!esNuevo);
+        this.add(panelPrincipal, BorderLayout.CENTER);
     }
 
     /**
