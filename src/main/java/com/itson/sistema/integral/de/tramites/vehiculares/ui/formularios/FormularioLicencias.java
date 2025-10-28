@@ -6,6 +6,7 @@ import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Persona;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.LicenciaDAO;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.PersonaDAO;
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.impl.PersonaDAOImpl;
+import com.itson.sistema.integral.de.tramites.vehiculares.servicios.ServicioTramites;
 
 import com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes.CampoFormulario;
 import java.awt.BorderLayout;
@@ -135,37 +136,46 @@ public class FormularioLicencias extends JPanel {
             return;
         }
 
+        Persona nuevaPersonaData = new Persona();
+        nuevaPersonaData.setRfc(txtRFC.getText().trim());
+        nuevaPersonaData.setNombreCompleto(txtNombre.getText().trim());
+        nuevaPersonaData.setFechaNacimiento(LocalDate.parse(txtFecha.getText().trim()));
+        nuevaPersonaData.setTelefono(txtTelefono.getText().trim());
+        nuevaPersonaData.setPais((String) comboPaises.getSelectedItem());
+
+        Licencia nuevaLicencia = new Licencia();
+        nuevaLicencia.setFechaExpedicion(LocalDate.now());
+        nuevaLicencia.setVigenciaAnios(Integer.parseInt(((String) comboVigencias.getSelectedItem()).split(" ")[0]));
+        nuevaLicencia.setDiscapacitado(checkDiscapacitado.isSelected());
+        nuevaLicencia.setMonto(Double.valueOf(txtMonto.getText().replace("$", "")));
+
         try {
-            Licencia licencia = new Licencia();
+            new ServicioTramites().tramitarLicencia(nuevaPersonaData, nuevaLicencia);
 
-            Persona persona = new Persona();
-            persona.setRfc(txtRFC.getText().trim());
-            persona.setNombreCompleto(txtNombre.getText().trim());
-            persona.setFechaNacimiento(LocalDate.parse(txtFecha.getText().trim()));
-            persona.setTelefono(txtTelefono.getText().trim());
-            persona.setPais((String) comboPaises.getSelectedItem());
+            Persona personaExistente = personaDAO.buscarPorRFC(nuevaPersonaData.getRfc());
 
-            Persona personaExistente = personaDAO.buscarPorRFC(persona.getRfc());
             if (personaExistente != null) {
-                licencia.setPersona(personaExistente);
+                personaExistente.setNombreCompleto(nuevaPersonaData.getNombreCompleto());
+                personaExistente.setFechaNacimiento(nuevaPersonaData.getFechaNacimiento());
+                personaExistente.setTelefono(nuevaPersonaData.getTelefono());
+                personaExistente.setPais(nuevaPersonaData.getPais());
+
+                personaDAO.actualizar(personaExistente.getId(), personaExistente);
+                nuevaLicencia.setPersona(personaExistente);
             } else {
-                personaDAO.crear(persona);
-                licencia.setPersona(persona);
+                personaDAO.crear(nuevaPersonaData);
+                nuevaLicencia.setPersona(nuevaPersonaData);
             }
 
-            licencia.setPersona(persona);
-            licencia.setFechaExpedicion(LocalDate.now());
-            licencia.setVigenciaAnios(Integer.parseInt(((String) comboVigencias.getSelectedItem()).split(" ")[0]));
-            licencia.setDiscapacitado(checkDiscapacitado.isSelected());
-            licencia.setMonto(Double.valueOf(txtMonto.getText().replace("$", "")));
-
-            licenciaDAO.crear(licencia);
+            licenciaDAO.crear(nuevaLicencia);
 
             JOptionPane.showMessageDialog(this, "Licencia agregada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             limpiarFormulario();
 
-        } catch (HeadlessException | NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Error al agregar la licencia: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Error al guardar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error desconocido al procesar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
