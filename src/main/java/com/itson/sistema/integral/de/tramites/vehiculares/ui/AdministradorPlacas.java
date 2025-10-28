@@ -2,7 +2,7 @@ package com.itson.sistema.integral.de.tramites.vehiculares.ui;
 
 import com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes.EncabezadoComponente;
 import com.itson.sistema.integral.de.tramites.vehiculares.ui.formularios.FormularioPlacas;
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.tablas.TablaLicenciasPanel; // Nota: Se usa TablaLicenciasPanel
+import com.itson.sistema.integral.de.tramites.vehiculares.ui.tablas.TablaLicenciasPanel;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.BorderFactory;
