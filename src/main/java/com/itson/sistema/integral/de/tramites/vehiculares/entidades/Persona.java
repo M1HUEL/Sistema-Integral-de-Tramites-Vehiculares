@@ -33,10 +33,10 @@ public class Persona implements Serializable {
     @Column(name = "rfc", nullable = false, unique = true, length = 13)
     private String rfc;
 
-    @Column(name = "nombre_completo", nullable = false)
+    @Column(name = "nombre_completo")
     private String nombreCompleto;
 
-    @Column(name = "fecha_nacimiento", nullable = false)
+    @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
 
     @Column(name = "telefono")
@@ -52,15 +52,6 @@ public class Persona implements Serializable {
     private List<Placa> placas = new ArrayList<>();
 
     public Persona() {
-    }
-
-    public Persona(Long id, String rfc, String nombreCompleto, LocalDate fechaNacimiento, String telefono, String pais) {
-        this.id = id;
-        this.rfc = rfc;
-        this.nombreCompleto = nombreCompleto;
-        this.fechaNacimiento = fechaNacimiento;
-        this.telefono = telefono;
-        this.pais = pais;
     }
 
     public Long getId() {
