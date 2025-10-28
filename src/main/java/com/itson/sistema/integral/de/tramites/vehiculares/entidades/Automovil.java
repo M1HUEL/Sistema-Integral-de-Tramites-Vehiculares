@@ -46,7 +46,7 @@ public class Automovil implements Serializable {
     @Column(name = "modelo")
     private Integer modelo;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "persona_id", nullable = false)
     private Persona persona;
 
