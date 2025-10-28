@@ -1,45 +1,9 @@
 package com.itson.sistema.integral.de.tramites.vehiculares.ui;
 
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes.EncabezadoComponente;
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.formularios.FormularioPlacas;
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.tablas.TablaLicenciasPanel;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
 public class AdministradorPlacas extends javax.swing.JFrame {
 
     public AdministradorPlacas() {
         initComponents();
-
-        this.setTitle("Administración de Trámites de Placas");
-        this.setLayout(new BorderLayout());
-
-        JPanel panelPrincipal = new JPanel(new BorderLayout());
-        panelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        EncabezadoComponente encabezado = new EncabezadoComponente();
-        FormularioPlacas formulario = new FormularioPlacas();
-        TablaLicenciasPanel tablaPlacas = new TablaLicenciasPanel();
-
-        JPanel contenido = new JPanel(new BorderLayout(10, 10));
-        contenido.add(formulario, BorderLayout.NORTH);
-        contenido.add(tablaPlacas, BorderLayout.CENTER);
-
-        JPanel controles = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
-
-        JButton btnRegistrar = new JButton("Registrar Placa");
-        JButton btnCancelar = new JButton("Cancelar Trámite");
-
-        controles.add(btnRegistrar);
-        controles.add(btnCancelar);
-
-        panelPrincipal.add(encabezado, BorderLayout.NORTH);
-        panelPrincipal.add(contenido, BorderLayout.CENTER);
-
-        this.add(panelPrincipal, BorderLayout.CENTER);
     }
 
     /**
@@ -68,6 +32,7 @@ public class AdministradorPlacas extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

@@ -1,9 +1,9 @@
 package com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes;
 
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.AdministradorConsultas;
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.AdministradorLicencias;
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.AdministradorPlacas;
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.AdministradorReportes;
+import com.itson.sistema.integral.de.tramites.vehiculares.ui.ModuloConsultas;
+import com.itson.sistema.integral.de.tramites.vehiculares.ui.ModuloLicencias;
+import com.itson.sistema.integral.de.tramites.vehiculares.ui.ModuloPlacas;
+import com.itson.sistema.integral.de.tramites.vehiculares.ui.ModuloReportes;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -33,22 +33,22 @@ public class EncabezadoComponente extends JPanel {
         add(btnReportes);
 
         btnLicencias.addActionListener(e -> {
-            AdministradorLicencias frame = new AdministradorLicencias();
+            ModuloLicencias frame = new ModuloLicencias();
             frame.setVisible(true);
         });
 
         btnPlacas.addActionListener(e -> {
-            AdministradorPlacas frame = new AdministradorPlacas();
+            ModuloPlacas frame = new ModuloPlacas();
             frame.setVisible(true);
         });
 
         btnConsultas.addActionListener(e -> {
-            AdministradorConsultas frame = new AdministradorConsultas();
+            ModuloConsultas frame = new ModuloConsultas();
             frame.setVisible(true);
         });
 
         btnReportes.addActionListener(e -> {
-            AdministradorReportes frame = new AdministradorReportes();
+            ModuloReportes frame = new ModuloReportes();
             frame.setVisible(true);
         });
     }

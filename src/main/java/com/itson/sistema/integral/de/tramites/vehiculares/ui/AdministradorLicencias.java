@@ -1,72 +1,9 @@
 package com.itson.sistema.integral.de.tramites.vehiculares.ui;
 
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes.EncabezadoComponente;
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.formularios.FormularioLicencias;
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.tablas.TablaLicenciasPanel;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
 public class AdministradorLicencias extends javax.swing.JFrame {
 
     public AdministradorLicencias() {
         initComponents();
-
-        setLayout(new BorderLayout());
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        JPanel contenido = new JPanel();
-        contenido.setLayout(new BorderLayout(10, 10));
-
-        FormularioLicencias formulario = new FormularioLicencias();
-        formulario.comboVigencias.addActionListener(e -> actualizarMonto(formulario));
-        formulario.checkDiscapacitado.addActionListener(e -> actualizarMonto(formulario));
-
-        TablaLicenciasPanel tablaLicencias = new TablaLicenciasPanel();
-
-        contenido.add(formulario, BorderLayout.NORTH);
-        contenido.add(tablaLicencias, BorderLayout.CENTER);
-
-        JPanel controles = new JPanel();
-        controles.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 10));
-
-        JButton button1 = new JButton("Lorem, ipsum dolor.");
-        JButton button2 = new JButton("Lorem, ipsum dolor.");
-
-        controles.add(button1);
-        controles.add(button2);
-
-        EncabezadoComponente encabezado = new EncabezadoComponente();
-
-        panel.add(encabezado, BorderLayout.NORTH);
-        panel.add(contenido, BorderLayout.CENTER);
-        panel.add(controles, BorderLayout.SOUTH);
-
-        add(panel, BorderLayout.CENTER);
-    }
-
-    private void actualizarMonto(FormularioLicencias f) {
-        double monto = switch (f.comboVigencias.getSelectedItem().toString()) {
-            case "1 Year" ->
-                500;
-            case "2 Year" ->
-                900;
-            case "3 Year" ->
-                1200;
-            default ->
-                0;
-        };
-
-        if (f.checkDiscapacitado.isSelected()) {
-            monto *= 0.5;
-        }
-
-        f.txtMonto.setText("$" + monto);
     }
 
     /**
@@ -95,7 +32,6 @@ public class AdministradorLicencias extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

@@ -1,61 +1,9 @@
 package com.itson.sistema.integral.de.tramites.vehiculares.ui;
 
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes.EncabezadoComponente;
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.formularios.FormularioConsultas;
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.tablas.TablaHistorialPanel;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
 public class AdministradorConsultas extends javax.swing.JFrame {
 
     public AdministradorConsultas() {
         initComponents();
-
-        setLayout(new BorderLayout());
-
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        JPanel contenido = new JPanel(new BorderLayout(10, 10));
-
-        FormularioConsultas formulario = new FormularioConsultas();
-        TablaHistorialPanel tablaHistorial = new TablaHistorialPanel();
-
-        formulario.btnBuscar.addActionListener(e -> {
-            tablaHistorial.limpiarTabla();
-
-            System.out.println("Buscando historial con criterios:");
-            System.out.println("RFC: " + formulario.txtRFC.getText());
-            System.out.println("Nombre: " + formulario.txtNombre.getText());
-            System.out.println("Año: " + formulario.txtAnioNacimiento.getText());
-            System.out.println("Tipo: " + formulario.comboTipoConsulta.getSelectedItem());
-
-            tablaHistorial.agregarFila("2025-01-14", "Licencia", "Juan Pérez", 900);
-            tablaHistorial.agregarFila("2025-02-20", "Placas", "María López", 1500);
-        });
-
-        contenido.add(formulario, BorderLayout.NORTH);
-        contenido.add(tablaHistorial, BorderLayout.CENTER);
-
-        JPanel controles = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
-        JButton btnExportar = new JButton("Exportar PDF");
-        JButton btnCerrar = new JButton("Cerrar");
-
-        controles.add(btnExportar);
-        controles.add(btnCerrar);
-
-        btnCerrar.addActionListener(e -> dispose());
-
-        EncabezadoComponente encabezado = new EncabezadoComponente();
-
-        panel.add(encabezado, BorderLayout.NORTH);
-        panel.add(contenido, BorderLayout.CENTER);
-        panel.add(controles, BorderLayout.SOUTH);
-
-        add(panel, BorderLayout.CENTER);
     }
 
     /**

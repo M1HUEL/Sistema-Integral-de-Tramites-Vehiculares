@@ -1,125 +1,113 @@
 package com.itson.sistema.integral.de.tramites.vehiculares.ui.formularios;
 
-import com.itson.sistema.integral.de.tramites.vehiculares.dao.impl.LicenciaDAOImpl;
 import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Licencia;
 import com.itson.sistema.integral.de.tramites.vehiculares.entidades.Persona;
-import com.itson.sistema.integral.de.tramites.vehiculares.dao.LicenciaDAO;
-import com.itson.sistema.integral.de.tramites.vehiculares.dao.PersonaDAO;
-import com.itson.sistema.integral.de.tramites.vehiculares.dao.impl.PersonaDAOImpl;
-import com.itson.sistema.integral.de.tramites.vehiculares.servicios.ServicioTramites;
-
-import com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes.CampoFormulario;
+import com.itson.sistema.integral.de.tramites.vehiculares.servicios.ServicioLicencias;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class FormularioLicencias extends JPanel {
 
-    public JTextField txtRFC, txtNombre, txtFecha, txtTelefono, txtMonto;
-    public JComboBox<String> comboPaises, comboVigencias;
-    public JCheckBox checkDiscapacitado;
-    public JButton btnAgregar, btnCancelar;
-    private final LicenciaDAO licenciaDAO = new LicenciaDAOImpl();
-    private final PersonaDAO personaDAO = new PersonaDAOImpl();
+    private final JTextField txtRFC = new JTextField();
+    private final JTextField txtNombre = new JTextField();
+    private final JTextField txtFecha = new JTextField();
+    private final JTextField txtTelefono = new JTextField();
+    public final JTextField txtMonto = new JTextField();
+
+    private final JComboBox<String> comboPaises = new JComboBox<>(new String[]{
+        "México", "Argentina", "Brasil", "Chile", "Colombia", "EEUU", "España", "Francia", "Italia", "Japón"
+    });
+
+    public final JComboBox<String> comboVigencias = new JComboBox<>(new String[]{
+        "1 Año", "2 Años", "3 Años"
+    });
+
+    public final JCheckBox checkDiscapacitado = new JCheckBox();
+    private final JButton btnAgregar = new JButton("Agregar");
+    private final JButton btnCancelar = new JButton("Cancelar");
+
+    private final ServicioLicencias servicioLicencias = new ServicioLicencias();
 
     public FormularioLicencias() {
         setLayout(new BorderLayout(10, 10));
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JLabel titulo = new JLabel("Formulario de Licencia");
-        titulo.setHorizontalAlignment(SwingConstants.CENTER);
-        titulo.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));
+        JLabel titulo = new JLabel("Formulario de Licencia", SwingConstants.CENTER);
+        add(titulo, BorderLayout.NORTH);
 
-        JPanel contenido = new JPanel(new GridLayout(4, 3, 10, 10));
-        contenido.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
+        JPanel panelCampos = new JPanel(new GridLayout(0, 2, 10, 10));
+        agregarCampo(panelCampos, "RFC:", txtRFC);
+        agregarCampo(panelCampos, "Nombre completo:", txtNombre);
+        agregarCampo(panelCampos, "Fecha de nacimiento (YYYY-MM-DD):", txtFecha);
+        agregarCampo(panelCampos, "Teléfono:", txtTelefono);
+        agregarCampo(panelCampos, "País:", comboPaises);
+        agregarCampo(panelCampos, "Vigencia:", comboVigencias);
+        agregarCampo(panelCampos, "Monto:", txtMonto);
+        agregarCampo(panelCampos, "¿Discapacitado?:", checkDiscapacitado);
 
-        txtRFC = new JTextField();
-        txtNombre = new JTextField();
-        txtFecha = new JTextField();
-        txtTelefono = new JTextField();
-        txtMonto = new JTextField();
         txtMonto.setEnabled(false);
 
-        String[] paises = {"México", "Argentina", "Brasil", "Chile", "Colombia", "EEUU", "España", "Francia", "Italia", "Japón"};
-        comboPaises = new JComboBox<>(paises);
+        add(panelCampos, BorderLayout.CENTER);
 
-        String[] vigencias = {"1 Year", "2 Year", "3 Year"};
-        comboVigencias = new JComboBox<>(vigencias);
-
-        checkDiscapacitado = new JCheckBox();
-
-        btnAgregar = new JButton("Agregar");
-        btnCancelar = new JButton("Cancelar");
-
-        contenido.add(new CampoFormulario("RFC", txtRFC));
-        contenido.add(new CampoFormulario("Nombre completo", txtNombre));
-        contenido.add(new CampoFormulario("Fecha nacimiento", txtFecha));
-        contenido.add(new CampoFormulario("Teléfono", txtTelefono));
-        contenido.add(new CampoFormulario("País", comboPaises));
-        contenido.add(new CampoFormulario("Vigencia", comboVigencias));
-        contenido.add(new CampoFormulario("Monto", txtMonto));
-        contenido.add(new CampoFormulario("Discapacidad", checkDiscapacitado));
-
-        JPanel panelBotones = new JPanel();
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
         panelBotones.add(btnAgregar);
         panelBotones.add(btnCancelar);
-        contenido.add(panelBotones);
-
-        add(titulo, BorderLayout.NORTH);
-        add(contenido, BorderLayout.CENTER);
+        add(panelBotones, BorderLayout.SOUTH);
 
         comboVigencias.addActionListener(e -> calcularMonto());
         checkDiscapacitado.addActionListener(e -> calcularMonto());
-
         btnAgregar.addActionListener(e -> agregarLicencia());
         btnCancelar.addActionListener(e -> limpiarFormulario());
     }
 
-    public void calcularMonto() {
-        String vigenciaStr = (String) comboVigencias.getSelectedItem();
-        boolean discapacitado = checkDiscapacitado.isSelected();
+    private void agregarCampo(JPanel panel, String etiqueta, JComponent campo) {
+        panel.add(new JLabel(etiqueta));
+        panel.add(campo);
+    }
 
-        if (vigenciaStr == null) {
+    private void calcularMonto() {
+        String vigencia = (String) comboVigencias.getSelectedItem();
+        boolean discapacitado = checkDiscapacitado.isSelected();
+        if (vigencia == null) {
             return;
         }
 
-        double monto = switch (vigenciaStr) {
-            case "1 Year" ->
-                discapacitado ? 200 : 600;
-            case "2 Year" ->
-                discapacitado ? 500 : 900;
-            case "3 Year" ->
-                discapacitado ? 700 : 1100;
-            default ->
-                0;
-        };
-
-        txtMonto.setText("$" + monto);
+        double monto = servicioLicencias.calcularMonto(vigencia, discapacitado);
+        txtMonto.setText(String.format("$ %.2f", monto));
     }
 
-    public boolean validarCampos() {
-        if (txtRFC.getText().trim().isEmpty()
-                || txtNombre.getText().trim().isEmpty()
-                || txtFecha.getText().trim().isEmpty()
-                || txtTelefono.getText().trim().isEmpty()
-                || comboPaises.getSelectedItem() == null
-                || comboVigencias.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+    private boolean validarCampos() {
+        if (txtRFC.getText().isBlank() || txtNombre.getText().isBlank()
+                || txtFecha.getText().isBlank() || txtTelefono.getText().isBlank()) {
+            mostrarError("Todos los campos son obligatorios.");
             return false;
         }
 
         try {
             LocalDate.parse(txtFecha.getText().trim());
         } catch (DateTimeParseException e) {
-            JOptionPane.showMessageDialog(this, "La fecha debe tener formato YYYY-MM-DD.", "Error", JOptionPane.ERROR_MESSAGE);
+            mostrarError("La fecha debe tener formato YYYY-MM-DD.");
             return false;
         }
 
         return true;
     }
 
-    public void limpiarFormulario() {
+    private void limpiarFormulario() {
         txtRFC.setText("");
         txtNombre.setText("");
         txtFecha.setText("");
@@ -135,46 +123,33 @@ public class FormularioLicencias extends JPanel {
             return;
         }
 
-        Persona nuevaPersonaData = new Persona();
-        nuevaPersonaData.setRfc(txtRFC.getText().trim());
-        nuevaPersonaData.setNombreCompleto(txtNombre.getText().trim());
-        nuevaPersonaData.setFechaNacimiento(LocalDate.parse(txtFecha.getText().trim()));
-        nuevaPersonaData.setTelefono(txtTelefono.getText().trim());
-        nuevaPersonaData.setPais((String) comboPaises.getSelectedItem());
-
-        Licencia nuevaLicencia = new Licencia();
-        nuevaLicencia.setFechaExpedicion(LocalDate.now());
-        nuevaLicencia.setVigenciaAnios(Integer.parseInt(((String) comboVigencias.getSelectedItem()).split(" ")[0]));
-        nuevaLicencia.setDiscapacitado(checkDiscapacitado.isSelected());
-        nuevaLicencia.setMonto(Double.valueOf(txtMonto.getText().replace("$", "")));
-
         try {
-            new ServicioTramites().tramitarLicencia(nuevaPersonaData, nuevaLicencia);
+            Persona persona = new Persona();
+            persona.setRfc(txtRFC.getText().trim());
+            persona.setNombreCompleto(txtNombre.getText().trim());
+            persona.setFechaNacimiento(LocalDate.parse(txtFecha.getText().trim()));
+            persona.setTelefono(txtTelefono.getText().trim());
+            persona.setPais((String) comboPaises.getSelectedItem());
 
-            Persona personaExistente = personaDAO.buscarPorRFC(nuevaPersonaData.getRfc());
+            Licencia licencia = new Licencia();
+            licencia.setVigenciaAnios(Integer.parseInt(((String) comboVigencias.getSelectedItem()).split(" ")[0]));
+            licencia.setDiscapacitado(checkDiscapacitado.isSelected());
+            licencia.setMonto(Double.valueOf(txtMonto.getText().replace("$", "").trim()));
 
-            if (personaExistente != null) {
-                personaExistente.setNombreCompleto(nuevaPersonaData.getNombreCompleto());
-                personaExistente.setFechaNacimiento(nuevaPersonaData.getFechaNacimiento());
-                personaExistente.setTelefono(nuevaPersonaData.getTelefono());
-                personaExistente.setPais(nuevaPersonaData.getPais());
+            servicioLicencias.tramitarLicencia(persona,
+                    (String) comboVigencias.getSelectedItem(),
+                    checkDiscapacitado.isSelected(),
+                    licencia.getMonto());
 
-                personaDAO.actualizar(personaExistente.getId(), personaExistente);
-                nuevaLicencia.setPersona(personaExistente);
-            } else {
-                personaDAO.crear(nuevaPersonaData);
-                nuevaLicencia.setPersona(nuevaPersonaData);
-            }
-
-            licenciaDAO.crear(nuevaLicencia);
-
-            JOptionPane.showMessageDialog(this, "Licencia agregada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Licencia tramitada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             limpiarFormulario();
 
-        } catch (RuntimeException ex) {
-            JOptionPane.showMessageDialog(this, "Error al guardar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error desconocido al procesar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (HeadlessException | NumberFormatException ex) {
+            mostrarError("Error al tramitar licencia: " + ex.getMessage());
         }
+    }
+
+    private void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
