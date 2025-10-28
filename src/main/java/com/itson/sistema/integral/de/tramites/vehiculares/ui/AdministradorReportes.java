@@ -23,7 +23,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
-
 import com.itson.sistema.integral.de.tramites.vehiculares.ui.componentes.EncabezadoComponente;
 import com.itson.sistema.integral.de.tramites.vehiculares.ui.formularios.FormularioReportes;
 import com.itson.sistema.integral.de.tramites.vehiculares.ui.tablas.TablaReportesPanel;
