@@ -2,6 +2,7 @@ package com.itson.sistema.integral.de.tramites.vehiculares.dao.impl;
 
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.AutomovilDAO;
 import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Automovil;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Persona;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -64,26 +65,60 @@ public class AutomovilDAOImpl implements AutomovilDAO {
             }
         }
     }
-
+    
     @Override
-    public Automovil crear(Automovil automovil) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.persist(automovil);
-            em.getTransaction().commit();
-            return automovil;
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
+public Automovil crear(Automovil automovil) {
+    EntityManager em = emf.createEntityManager();
+    try {
+        em.getTransaction().begin();
+
+        // Asegurarnos de que la persona asociada esté gestionada por el EntityManager
+        Persona persona = automovil.getPersona();
+        if (persona != null) {
+            Persona personaGestionada = null;
+
+            // Si la persona tiene id, buscar por id
+            if (persona.getId() != null) {
+                personaGestionada = em.find(Persona.class, persona.getId());
             }
-            throw new RuntimeException("Error al crear el automóvil.", e);
-        } finally {
-            if (em != null) {
-                em.close();
+
+            // Si no se encontró por id y hay RFC, intentar buscar por RFC
+            if (personaGestionada == null && persona.getRfc() != null && !persona.getRfc().isBlank()) {
+                try {
+                    personaGestionada = em.createQuery(
+                            "SELECT p FROM Persona p WHERE p.rfc = :rfc", Persona.class)
+                            .setParameter("rfc", persona.getRfc())
+                            .getSingleResult();
+                } catch (NoResultException ex) {
+                    personaGestionada = null;
+                }
             }
+
+            // Si personaGestionada sigue siendo null -> merge para conseguir una instancia gestionada
+            if (personaGestionada == null) {
+                // merge insertará o actualizará la persona según su estado
+                personaGestionada = em.merge(persona);
+                // Nota: merge devuelve la instancia gestionada
+            }
+
+            // asignamos la persona gestionada al automóvil antes de persistir
+            automovil.setPersona(personaGestionada);
+        }
+
+        em.persist(automovil);
+        em.getTransaction().commit();
+        return automovil;
+    } catch (Exception e) {
+        if (em.getTransaction().isActive()) {
+            em.getTransaction().rollback();
+        }
+        throw new RuntimeException("Error al crear el automóvil.", e);
+    } finally {
+        if (em != null) {
+            em.close();
         }
     }
+}
 
     @Override
     public boolean actualizar(Automovil automovil) {

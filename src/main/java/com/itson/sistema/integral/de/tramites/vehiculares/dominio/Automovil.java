@@ -40,7 +40,7 @@ public class Automovil implements Serializable {
     @Column(name = "modelo")
     private Integer modelo;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne // quite esto (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "persona_id", nullable = false)
     private Persona persona;
 

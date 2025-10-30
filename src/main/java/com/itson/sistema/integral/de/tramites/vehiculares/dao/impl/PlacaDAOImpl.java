@@ -1,6 +1,8 @@
 package com.itson.sistema.integral.de.tramites.vehiculares.dao.impl;
 
 import com.itson.sistema.integral.de.tramites.vehiculares.dao.PlacaDAO;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Automovil;
+import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Persona;
 import com.itson.sistema.integral.de.tramites.vehiculares.dominio.Placa;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -80,24 +82,73 @@ public class PlacaDAOImpl implements PlacaDAO {
     }
 
     @Override
-    public Placa crear(Placa placa) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.persist(placa);
-            em.getTransaction().commit();
-            return placa;
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
+public Placa crear(Placa placa) {
+    EntityManager em = emf.createEntityManager();
+    try {
+        em.getTransaction().begin();
+
+        //  Asegurar Automovil gestionado
+        Automovil auto = placa.getAutomovil();
+        if (auto != null) {
+            Automovil autoGestionado = null;
+            if (auto.getId() != null) {
+                autoGestionado = em.find(Automovil.class, auto.getId());
             }
-            throw new RuntimeException("Error al crear la placa", e);
-        } finally {
-            if (em != null) {
-                em.close();
+            if (autoGestionado == null && auto.getNumeroSerie() != null) {
+                try {
+                    autoGestionado = em.createQuery(
+                            "SELECT a FROM Automovil a WHERE a.numeroSerie = :serie", Automovil.class)
+                            .setParameter("serie", auto.getNumeroSerie())
+                            .getSingleResult();
+                } catch (NoResultException ex) {
+                    autoGestionado = null;
+                }
             }
+            if (autoGestionado == null) {
+                // Si no existe, merge (o persist explícito si quieres crear)
+                autoGestionado = em.merge(auto);
+            }
+            placa.setAutomovil(autoGestionado);
+        }
+
+        //  Asegurar Persona gestionada (si placa referencia a persona)
+        Persona persona = placa.getPersona();
+        if (persona != null) {
+            Persona personaGestionada = null;
+            if (persona.getId() != null) {
+                personaGestionada = em.find(Persona.class, persona.getId());
+            }
+            if (personaGestionada == null && persona.getRfc() != null) {
+                try {
+                    personaGestionada = em.createQuery(
+                            "SELECT p FROM Persona p WHERE p.rfc = :rfc", Persona.class)
+                            .setParameter("rfc", persona.getRfc())
+                            .getSingleResult();
+                } catch (NoResultException ex) {
+                    personaGestionada = null;
+                }
+            }
+            if (personaGestionada == null) {
+                personaGestionada = em.merge(persona);
+            }
+            placa.setPersona(personaGestionada);
+        }
+
+        em.persist(placa);
+        em.getTransaction().commit();
+        return placa;
+    } catch (Exception e) {
+        if (em.getTransaction().isActive()) {
+            em.getTransaction().rollback();
+        }
+        throw new RuntimeException("Error al crear la placa", e);
+    } finally {
+        if (em != null) {
+            em.close();
         }
     }
+}
+
 
     @Override
     public boolean actualizar(Placa placa) {
